@@ -1,8 +1,10 @@
+require 'io/console'
+
 PASSWORD = 'abc$123'.freeze
 
 def request_password(request)
   puts request
-  gets.chomp
+  STDIN.noecho(&:gets).chomp
 end
 
 def check_password(inserted_password)
