@@ -6,6 +6,11 @@ def retirement_calculator
   retire_age = Integer(gets.chomp)
   years_to_retire = retire_age - age
 
+  while age.zero?
+    puts 'What is your current age?'
+    age = gets.chomp.to_i
+  end
+
   if years_to_retire < 0
     puts 'You can already retire.'
   else
