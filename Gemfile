@@ -1,3 +1,3 @@
 group :test do
-  gem 'rake'
+  gem 'rake', '~> 12.3.1'
 end
