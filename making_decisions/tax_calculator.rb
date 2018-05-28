@@ -14,15 +14,15 @@ def calc_taxed_amount(amount)
 end
 
 def display_tax
-  puts "The tax is $#{Tax}"
+  "The tax is $#{Tax}"
 end
 
 def display_subtotal(amount)
-  puts "The subtotal is $#{amount}."
+  "The subtotal is $#{amount}."
 end
 
 def display_total(taxed_amount)
-  puts "The total is $#{taxed_amount}."
+  "The total is $#{taxed_amount}."
 end
 
 def main_program
@@ -30,12 +30,12 @@ def main_program
   state = info_request('What is the state?').to_s.downcase
 
   if check_state(state)
-    display_tax(Tax)
-    display_subtotal(amount)
+    puts display_tax
+    puts display_subtotal(amount)
     total = calc_taxed_amount(amount)
-    display_total(total)
+    puts display_total(total)
   else
-    display_total(amount)
+    puts display_total(amount)
   end
 end
 
