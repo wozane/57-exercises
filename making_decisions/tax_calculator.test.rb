@@ -1,6 +1,6 @@
 require 'minitest/autorun'
 require 'minitest/pride'
-require_relative 'tax_calculator'
+require_relative 'tax_calculator_lib'
 
 class TaxCalculatorTest < Minitest::Test
   Tax = 0.55
