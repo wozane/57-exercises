@@ -16,28 +16,36 @@ def engine_start_and_die?
   end
 end
 
+def making_clicking_noice?
+  answer = request_answer('Does the car make a clicking noise?')
+  if answer == 'y'
+    give_answer('Replace the battery.')
+  else
+    fail_to_start?
+  end
+end
+
+def fail_to_start?
+  answer = request_answer('Does the car crank up but fail to start?')
+  if answer == 'y'
+    give_answer('Check spark plug connections')
+  else
+    engine_start_and_die?
+  end
+end
+
 def car_silient?
   question = request_answer('Is the car silent when you turn the key?')
 
   if question == 'y'
-    answer_1 = request_answer('Are the battery terminals corroded?')
-    if answer_1 == 'y'
+    answer = request_answer('Are the battery terminals corroded?')
+    if answer == 'y'
       give_answer('Clean terminals and try starting again.')
     else
       give_answer('Replace cables and try again.')
     end
   else
-    answer_2 = request_answer('Does the car make a clicking noise?')
-    if answer_2 == 'y'
-      give_answer('Replace the battery.')
-    else
-      answer_3 = request_answer('Does the car crank up but fail to start?')
-      if answer_3 == 'y'
-        give_answer('Check spark plug connections')
-      else
-        engine_start_and_die?
-      end
-    end
+    making_clicking_noice?
   end
 end
 
