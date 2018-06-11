@@ -1,4 +1,3 @@
-gem 'minitest', '~> 5.0'
 require 'minitest/autorun'
 require 'minitest/pride'
 require_relative 'comparing_numbers'
@@ -17,6 +16,6 @@ class ComparingNumbersTest < MiniTest::Test
   end
 
   def test_creating_array_with_entered_numbers
-    assert_equal [1, 2, 3], create_array(1,2,3)
+    assert_equal [1, 2, 3], create_array(1, 2, 3)
   end
 end
