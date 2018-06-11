@@ -1,35 +1,13 @@
+MONTHS = %w[none Jan Feb March April May June July August September October November December]
+MONTHS.freeze
+
 def info_request(question)
   puts question
   gets.chomp
 end
 
-def switch(number)
-  case number
-  when 1
-    'Jan'
-  when 2
-    'Feb'
-  when 3
-    'March'
-  when 4
-    'April'
-  when 5
-    'May'
-  when 6
-    'June'
-  when 7
-    'July'
-  when 8
-    'August'
-  when 9
-    'September'
-  when 10
-    'October'
-  when 11
-    'November'
-  when 12
-    'December'
-  end
+def switch_number_to_month(number)
+  MONTHS[number]
 end
 
 def main_program
@@ -38,7 +16,7 @@ def main_program
   if month > 12
     puts 'That number is not valid'
   else
-    month_name = switch(month)
+    month_name = switch_number_to_month(month)
     puts "The name of the month is #{month_name}."
   end
 end
