@@ -1,12 +1,12 @@
-def temperature_convertion_to_celsius(temp_in_f)
-  temp_in_f.to_i
-  celcius = (temp_in_f - 32) * 5 / 9
+def temperature_convertion_to_celsius(temp_in_fahrenheit)
+  temp_in_fahrenheit.to_f
+  celcius = (temp_in_fahrenheit - 32) * 5 / 9
   celcius
 end
 
-def temperature_convertion_to_fahrenheit(temp_in_c)
-  temp_in_c.to_i
-  fahrenheit = (temp_in_c * 9 / 5) + 32
+def temperature_convertion_to_fahrenheit(temp_in_celsius)
+  temp_in_celsius.to_f
+  fahrenheit = (temp_in_celsius * 9 / 5) + 32
   fahrenheit
 end
 
