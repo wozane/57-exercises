@@ -39,4 +39,6 @@ def main_program
   end
 end
 
-main_program
+if __FILE__ == $0
+  main_program
+end
