@@ -11,8 +11,7 @@ is_fuel_injection = 'Does your car have fuel injection?'
 fuel_injection = 'Get it in for service.'
 no_fuel_injection = 'Check to ensure the choke is opening and closing.'
 
-
-Question = %W[
+QUESTION = %W[
   #{is_car_silent}
   #{is_battery_corroded}
   #{battery_corroded}
@@ -25,15 +24,15 @@ Question = %W[
   #{is_fuel_injection}
   #{fuel_injection}
   #{no_fuel_injection}
-]
+].freeze
 
 def asking_question(number)
-  puts Question[number]
+  puts QUESTION[number]
   gets.chomp
 end
 
 def give_answer(number)
-  puts Question[number]
+  puts QUESTION[number]
 end
 
 def yes_answer(answer)
