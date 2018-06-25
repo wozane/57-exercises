@@ -10,8 +10,6 @@ def number_pick(input)
     level = rand(100)
   elsif input == 3
     level = rand(1000)
-  else
-    puts 'incorect number'
   end
   level
 end
@@ -31,10 +29,12 @@ def main_program
       guesses_count += 1
       user_guess = info_request('Too high. Guess agian:')
     elsif user_guess == computer_pick
-      puts "Great, it took you #{guesses_count} guesses"
+      puts "Great, it took you #{guesses_count} guesses."
       break
     end
   end
 end
 
-main_program
+if __FILE__ == $0
+  main_program
+end
