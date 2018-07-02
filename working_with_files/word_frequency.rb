@@ -1,6 +1,8 @@
 text = []
 
-File.open('word.txt', 'r') do |file|
+file = File.join(File.expand_path(File.dirname(__FILE__)), 'word.txt')
+
+File.open(file, 'r') do |file|
   file.each_line do |line|
     arr = line.split(' ')
     arr.each do |word|
