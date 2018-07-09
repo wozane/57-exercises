@@ -11,6 +11,6 @@ people_in_space.each do |post|
   rows << [post['name'], post['craft']]
 end
 
-table = Terminal::Table.new :headings => ['Name', 'Craft'], :rows => rows
+table = Terminal::Table.new headings: %w[Name Craft], rows: rows
 
 puts table
