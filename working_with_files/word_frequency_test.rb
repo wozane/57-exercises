@@ -22,7 +22,7 @@ class WordFrequencyTest < MiniTest::Test
   end
 
   def test_print_names_and_stars
-    result = { 'badger' => 7, 'mushroom' => 2, 'snake' => 1}
+    result = { 'badger' => 7, 'mushroom' => 2, 'snake' => 1 }
 
     assert_equal result, print_names_and_stars(@csv)
   end
