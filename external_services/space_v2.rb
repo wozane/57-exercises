@@ -17,7 +17,7 @@ end
 
 # parse API response
 class SpaceParser
-  def format(data)
+  def format_api(data)
     return '' if data.empty?
 
     response = JSON.parse(data)
@@ -36,7 +36,7 @@ class SpacePeopleReportGenerator
   end
 
   def create_report
-    space_praser.format(space_connector.call)
+    space_praser.format_api(space_connector.call)
   end
 
   def print_people
