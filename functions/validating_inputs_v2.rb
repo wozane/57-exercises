@@ -1,14 +1,11 @@
 # documentation
 class Validator
   def initialize
-    puts 'Enter the first name:'
-    @first_name = gets.chomp
-    puts 'Enter the last name:'
-    @last_name = gets.chomp
-    puts 'Enter the ZIP code:'
-    @zip = gets.chomp
-    puts 'Enter an employee ID:'
-    @id = gets.chomp
+    @first_name = ''
+    @last_name = ''
+    @zip = ''
+    @id = ''
+    assign_info
   end
 
   def valid?
@@ -19,13 +16,25 @@ class Validator
   end
 
   def errors
-    return 'There were no errors found.' if valid?
+    puts 'There were no errors found.' if valid?
     errors = []
     errors << 'The first name must be filled in.' unless first_name_valid?
     errors << 'The last name must be filled in.' unless last_name_valid?
     errors << 'The ZIP code must be numeric.' unless zip_valid?
     errors << "#{id} is not a valid ID." unless id_valid?
     puts errors
+  end
+
+  def assign_info
+    @first_name = info_request('Enter the first name:')
+    @last_name = info_request('Enter the last name:')
+    @zip = info_request('Enter the ZIP code:')
+    @id = info_request('Enter an employee ID:')
+  end
+
+  def info_request(question)
+    puts question
+    gets.chomp
   end
 
   private
