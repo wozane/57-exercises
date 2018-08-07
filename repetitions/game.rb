@@ -3,13 +3,13 @@ def info_request(question)
   Integer(gets.chomp)
 end
 
-def number_pick(input)
+def number_pick(input, rand_object=Kernel)
   if input == 1
-    level = rand(10)
+    level = rand_object.rand(10)
   elsif input == 2
-    level = rand(100)
+    level = rand_object.rand(100)
   elsif input == 3
-    level = rand(1000)
+    level = rand_object.rand(1000)
   end
   level
 end
