@@ -49,27 +49,26 @@ class SpacePresenter
 
   def header
     string = "#{'Name'.ljust(30, ' ')}| Craft"
-    string += '\n'
+    string += "\n"
     string += '-' * 37
-    string += '\n'
+    string += "\n"
     string
   end
 
   def rows
-    data.map { |person| row(person) }.join('\n')
+    data.map { |person| row(person) }.join("\n")
   end
 
   def row(person)
     string = person['name'].ljust(30, ' ')
     string += '| '
     string += person['craft']
-    string += '\n'
     string
   end
 end
 
 class Space
-  def initialize(connector=SpaceConnector, parser=SpaceParser, presenter=SpacePresenter)
+  def initialize(connector = SpaceConnector, parser = SpaceParser, presenter = SpacePresenter)
     @connector = connector
     @parser = parser
     @presenter = presenter
@@ -82,5 +81,10 @@ class Space
   end
 
   private
+
   attr_reader :connector, :presenter, :parser
+end
+
+if __FILE__ == $0
+  puts Space.new.call
 end

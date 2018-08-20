@@ -41,8 +41,8 @@ class DummyPresenter
 end
 
 class TestSpace < Minitest::Test
-  HEADER = 'Name                          | Craft\n' +
-           '-------------------------------------\n'
+  HEADER = "Name                          | Craft\n" +
+           "-------------------------------------\n"
 
   def test_space_connector
     connector = SpaceConnector.new(DummyRequest)
@@ -61,7 +61,7 @@ class TestSpace < Minitest::Test
 
   def test_presenter_2
     presenter = SpacePresenter.new([{ 'name' => 'test', 'craft' => 'space' }])
-    expected = HEADER + 'test' + ' ' * 26 + '| space\n'
+    expected = HEADER + 'test' + ' ' * 26 + '| space'
     assert_equal expected, presenter.present
   end
 
