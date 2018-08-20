@@ -1,4 +1,5 @@
 require 'minitest/autorun'
+require 'minitest/pride'
 require_relative 'space_v3'
 require 'ostruct'
 
@@ -40,7 +41,7 @@ class DummyPresenter
   end
 end
 
-class TestSpace < Minitest::Test
+class TestSpace < MiniTest::Test
   HEADER = "Name                          | Craft\n" +
            "-------------------------------------\n"
 
