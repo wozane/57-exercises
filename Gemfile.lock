@@ -6,6 +6,9 @@ GEM
     minitest (5.10.3)
     multi_xml (0.6.0)
     rake (12.3.1)
+    terminal-table (1.8.0)
+      unicode-display_width (~> 1.1, >= 1.1.1)
+    unicode-display_width (1.4.0)
 
 PLATFORMS
   ruby
@@ -14,6 +17,7 @@ DEPENDENCIES
   httparty
   minitest
   rake (~> 12.3.1)
+  terminal-table
 
 BUNDLED WITH
    1.16.1
