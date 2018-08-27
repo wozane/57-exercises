@@ -37,7 +37,7 @@ class TimePresenter
   end
 
   def present
-    "Today's date is: " + formated_data
+    formated_data
   end
 
   private
@@ -46,34 +46,34 @@ class TimePresenter
 
   def split_value
     data_time = raw_time['currentTime']
-    split_string = data_time.split(' ')
-    split_string
+    data_time.split(' ')
   end
 
   def formated_data
-    present_month + present_day + present_year
+    present_month + ' ' + present_day + ' ' + present_year
+  end
+
+  def split_date
+    Date.parse(split_value[0])
   end
 
   def present_month
-    month = Date.parse(split_value[0]).strftime('%B')
-    month += ' '
-    month
+    split_date.strftime('%B')
   end
 
   def present_year
-    year = Date.parse(split_value[0]).strftime('%Y')
-    year
+    split_date.strftime('%Y')
   end
 
   def present_day
-    day = Date.parse(split_value[0]).strftime('%d')
-    day += ' '
-    day
+    split_date.strftime('%d')
   end
 end
 
 class TimeClient
-  def initialize(connector = TimeConnector, parser = TimeParser, presenter = TimePresenter)
+  def initialize(connector = TimeConnector,
+                 parser = TimeParser,
+                 presenter = TimePresenter)
     @connector = connector
     @parser = parser
     @presenter = presenter
@@ -82,7 +82,8 @@ class TimeClient
   def call
     response = connector.new.call
     response_body = parser.new(response).call
-    presenter.new(response_body).present
+    data_presenter = presenter.new(response_body).present
+    "Today's date is: " + data_presenter
   end
 
   private
