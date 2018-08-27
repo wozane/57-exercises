@@ -3,7 +3,7 @@ def info_request(question)
   Integer(gets.chomp)
 end
 
-def number_pick(input, rand_object=Kernel)
+def number_pick(input, rand_object = Kernel)
   if input == 1
     level = rand_object.rand(10)
   elsif input == 2
