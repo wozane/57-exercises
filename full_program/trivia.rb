@@ -54,31 +54,125 @@ class TriviaQuestion
   attr_reader :round_data
 end
 
-class TriviaAnswers
+class TriviaCorrectAnswerParser
   def initialize(round_data)
     @round_data = round_data
   end
 
   def call
-    correct_answer + incorrect_answers
+    round_data['correct_answer']
   end
 
   private
   attr_reader :round_data
+end
 
-  def correct_answer
-    round_data['correct_answer'] + ', '
+class TriviaIncorrectAnswersParser
+  def initialize(round_data)
+    @round_data = round_data
   end
 
-  def incorrect_answers
-    round_data['incorrect_answers'].join(', ')
+  def call
+    round_data['incorrect_answers']
+  end
+
+  private
+  attr_reader :round_data
+end
+
+class TriviaAnswersPresenter
+  def initialize(correct_answer, incorrect_answers)
+    @correct_answer = correct_answer
+    @incorrect_answers = incorrect_answers
+  end
+
+  def call
+    answers = []
+    answers << correct_answer << incorrect_answers
+    answers.flatten!.shuffle!
+  end
+
+  private
+  attr_reader :correct_answer, :incorrect_answers
+end
+
+class UserInput
+  def request_for_answer
+    puts 'Type your answer(1-4)'
+    gets.chomp
   end
 end
 
-all = TriviaParser.new(TrivaConnector.new.call).call
-round = TriviaRoundPresenter.new(all).call
+class TriviaGame
+  def initialize(answers = TriviaAnswersPresenter,
+                 connector = TrivaConnector,
+                 correct_answer = TriviaCorrectAnswerParser,
+                 game_data_parser = TriviaParser,
+                 round_data = TriviaRoundPresenter,
+                 question = TriviaQuestion,
+                 user_answer = UserInput)
+    @answers = answers
+    @connector = connector
+    @correct_answer = correct_answer
+    @game_data_parser = game_data_parser
+    @round_data = round_data
+    @question = question
+    @user_answer = user_answer
+  end
 
-question = TriviaQuestion.new(round).call
-answers = TriviaAnswers.new(round).call
-puts question
-puts answers
+  def formated_steps
+    welcome + show_question + show_answers
+  end
+
+  def start_game
+    formated_steps
+  end
+
+  private
+  attr_reader :answers,
+              :connector,
+              :correct_answer,
+              :game_data_parser,
+              :round_data,
+              :question,
+              :user_answer
+
+  def welcome
+    string = 'Welcome to *Trivia game*'
+    string += "\n"
+    string += 'After the question appears type your answer (1-4)'
+    string += "\n"
+  end
+
+  def game_material
+    material = game_data_parser.new(connector.new.call).call
+    parsed_material = round_data.new(material).call
+    parsed_material
+  end
+
+  def show_question
+    show = question.new(game_material).call
+    show += "\n"
+  end
+
+  def show_answers
+    show = answers.new.call
+    show
+  end
+end
+
+# all = TriviaParser.new(TrivaConnector.new.call).call
+# round = TriviaRoundPresenter.new(all).call
+
+# question = TriviaQuestion.new(round).call
+# in_answers = TriviaIncorrectAnswersParser.new(round).call
+# correct = TriviaCorrectAnswerParser.new(round).call
+# puts "correct #{correct}"
+
+# ans = TriviaAnswersPresenter.new.call
+# puts ans.index(correct)
+# p ans
+# users_an = ans.index(correct)
+# p users_an + 1
+
+puts TriviaGame.new.start_game
