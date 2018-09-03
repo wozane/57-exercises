@@ -1,2 +1,4 @@
 Style/Documentation:
-   Enabled: false
+  Enabled: false
+Layout/EmptyLinesAroundAccessModifier:
+  Enabled: false
