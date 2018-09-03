@@ -98,7 +98,6 @@ end
 
 class UserInput
   def request_for_answer
-    puts 'Type your answer(1-4)'
     gets.chomp
   end
 end
@@ -124,8 +123,7 @@ class TriviaGame
 
   def formated_steps
     welcome
-    show_question
-    format_answers
+    present_material(game_material)
   end
 
   def start_game
@@ -143,26 +141,53 @@ class TriviaGame
               :user_answer
 
   def welcome
-    puts 'Welcome to *Trivia game*'
+    puts 'Welcome to *Trivia game*' + "\n"
   end
 
-  def show_question
-    puts question.new(game_material).call.to_s
+  def show_question(material)
+    puts question.new(material).call
   end
 
-  def format_answers
-    correct = correct_answer.new(game_material).call
-    incorrect = incorrect_answers.new(game_material).call
+  def format_answers(material)
+    correct = correct_answer.new(material).call
+    incorrect = incorrect_answers.new(material).call
     all = answers.new(correct, incorrect).call
     all.each_with_index do |element, index|
-      puts "#{index + 1} => #{element}"
+      p "#{index + 1} => #{element}"
+    end
+  end
+
+  def present_material(material)
+    show_question(material)
+    answer_array = format_answers(material)
+    correct = correct_answer.new(material).call
+    index_of_correct_answer = answer_array.index(correct)
+    count = 1
+    loop do
+      puts 'What is your answer?'
+      answer_user_guess = request_user_answer.to_i
+      guess = answer_user_guess - 1
+      if answer_user_guess > 4
+        puts 'Only numbers from 1 to 4'
+        count += 1
+      elsif guess != index_of_correct_answer
+        count += 1
+        puts 'Try again'
+      else
+        puts "Well done. It took you #{count} guesses"
+        break
+      end
     end
   end
 
   def game_material
     material = game_data_parser.new(connector.new.call).call
     parsed_material = round_data.new(material).call
-    p parsed_material
+    parsed_material
+  end
+
+  def request_user_answer
+    user_answer.new.request_for_answer
   end
 end
 
