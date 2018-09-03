@@ -104,16 +104,18 @@ class UserInput
 end
 
 class TriviaGame
-  def initialize(answers = TriviaAnswersPresenter,
-                 connector = TrivaConnector,
-                 correct_answer = TriviaCorrectAnswerParser,
-                 game_data_parser = TriviaParser,
-                 round_data = TriviaRoundPresenter,
-                 question = TriviaQuestion,
-                 user_answer = UserInput)
+  def initialize(answers: TriviaAnswersPresenter,
+                 connector: TrivaConnector,
+                 correct_answer: TriviaCorrectAnswerParser,
+                 incorrect_answers: TriviaIncorrectAnswersParser,
+                 game_data_parser: TriviaParser,
+                 round_data: TriviaRoundPresenter,
+                 question: TriviaQuestion,
+                 user_answer: UserInput)
     @answers = answers
     @connector = connector
     @correct_answer = correct_answer
+    @incorrect_answers = incorrect_answers
     @game_data_parser = game_data_parser
     @round_data = round_data
     @question = question
@@ -121,7 +123,9 @@ class TriviaGame
   end
 
   def formated_steps
-    welcome + show_question + show_answers
+    welcome
+    show_question
+    format_answers
   end
 
   def start_game
@@ -132,47 +136,34 @@ class TriviaGame
   attr_reader :answers,
               :connector,
               :correct_answer,
+              :incorrect_answers,
               :game_data_parser,
               :round_data,
               :question,
               :user_answer
 
   def welcome
-    string = 'Welcome to *Trivia game*'
-    string += "\n"
-    string += 'After the question appears type your answer (1-4)'
-    string += "\n"
+    puts 'Welcome to *Trivia game*'
+  end
+
+  def show_question
+    puts question.new(game_material).call.to_s
+  end
+
+  def format_answers
+    correct = correct_answer.new(game_material).call
+    incorrect = incorrect_answers.new(game_material).call
+    all = answers.new(correct, incorrect).call
+    all.each_with_index do |element, index|
+      puts "#{index + 1} => #{element}"
+    end
   end
 
   def game_material
     material = game_data_parser.new(connector.new.call).call
     parsed_material = round_data.new(material).call
-    parsed_material
-  end
-
-  def show_question
-    show = question.new(game_material).call
-    show += "\n"
-  end
-
-  def show_answers
-    show = answers.new.call
-    show
+    p parsed_material
   end
 end
 
-# all = TriviaParser.new(TrivaConnector.new.call).call
-# round = TriviaRoundPresenter.new(all).call
-
-# question = TriviaQuestion.new(round).call
-# in_answers = TriviaIncorrectAnswersParser.new(round).call
-# correct = TriviaCorrectAnswerParser.new(round).call
-# puts "correct #{correct}"
-
-# ans = TriviaAnswersPresenter.new.call
-# puts ans.index(correct)
-# p ans
-# users_an = ans.index(correct)
-# p users_an + 1
-
-puts TriviaGame.new.start_game
+TriviaGame.new.start_game
