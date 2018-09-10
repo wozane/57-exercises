@@ -1,7 +1,7 @@
 require 'HTTParty'
 require 'json'
 
-class TrivaConnector
+class TriviaConnector
   def initialize(connector = HTTParty)
     @connector = connector
   end
@@ -104,7 +104,7 @@ end
 
 class TriviaGame
   def initialize(answers: TriviaAnswersPresenter,
-                 connector: TrivaConnector,
+                 connector: TriviaConnector,
                  correct_answer: TriviaCorrectAnswerParser,
                  incorrect_answers: TriviaIncorrectAnswersParser,
                  game_data_parser: TriviaParser,
