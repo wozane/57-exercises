@@ -191,4 +191,6 @@ class TriviaGame
   end
 end
 
-TriviaGame.new.start_game
+if __FILE__ == $0
+  TriviaGame.new.start_game
+end
