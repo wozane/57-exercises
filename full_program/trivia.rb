@@ -29,55 +29,55 @@ class TriviaParser
 end
 
 class TriviaRoundPresenter
-  def initialize(data)
-    @data = data
+  def initialize(game_information)
+    @game_information = game_information
   end
 
   def call
-    data['results'].sample
+    game_information['results'].sample
   end
 
   private
-  attr_reader :data
+  attr_reader :game_information
 end
 
 class TriviaQuestion
-  def initialize(round_data)
-    @round_data = round_data
+  def initialize(game_information)
+    @game_information = game_information
   end
 
   def call
-    round_data['question']
+    game_information['question']
   end
 
   private
-  attr_reader :round_data
+  attr_reader :game_information
 end
 
 class TriviaCorrectAnswerParser
-  def initialize(round_data)
-    @round_data = round_data
+  def initialize(game_information)
+    @game_information = game_information
   end
 
   def call
-    round_data['correct_answer']
+    game_information['correct_answer']
   end
 
   private
-  attr_reader :round_data
+  attr_reader :game_information
 end
 
 class TriviaIncorrectAnswersParser
-  def initialize(round_data)
-    @round_data = round_data
+  def initialize(game_information)
+    @game_information = game_information
   end
 
   def call
-    round_data['incorrect_answers']
+    game_information['incorrect_answers']
   end
 
   private
-  attr_reader :round_data
+  attr_reader :game_information
 end
 
 class TriviaAnswersPresenter
@@ -88,7 +88,8 @@ class TriviaAnswersPresenter
 
   def call
     answers = []
-    answers << correct_answer << incorrect_answers
+    answers << correct_answer
+    answers << incorrect_answers
     answers.flatten!.shuffle!
   end
 
@@ -108,7 +109,7 @@ class TriviaGame
                  correct_answer: TriviaCorrectAnswerParser,
                  incorrect_answers: TriviaIncorrectAnswersParser,
                  game_data_parser: TriviaParser,
-                 round_data: TriviaRoundPresenter,
+                 game_information: TriviaRoundPresenter,
                  question: TriviaQuestion,
                  user_answer: UserInput)
     @answers = answers
@@ -116,7 +117,7 @@ class TriviaGame
     @correct_answer = correct_answer
     @incorrect_answers = incorrect_answers
     @game_data_parser = game_data_parser
-    @round_data = round_data
+    @game_information = game_information
     @question = question
     @user_answer = user_answer
   end
@@ -136,7 +137,7 @@ class TriviaGame
               :correct_answer,
               :incorrect_answers,
               :game_data_parser,
-              :round_data,
+              :game_information,
               :question,
               :user_answer
 
@@ -162,28 +163,33 @@ class TriviaGame
     answer_array = format_answers(material)
     correct = correct_answer.new(material).call
     index_of_correct_answer = answer_array.index(correct)
+    game_flow(index_of_correct_answer)
+  end
+
+  def game_flow(correct_answer)
     count = 1
     loop do
       puts 'What is your answer?'
       answer_user_guess = request_user_answer.to_i
       guess = answer_user_guess - 1
-      if answer_user_guess > 4
-        puts 'Only numbers from 1 to 4'
-        count += 1
-      elsif guess != index_of_correct_answer
-        count += 1
-        puts 'Try again'
-      else
-        puts "Well done. It took you #{count} guesses"
-        break
-      end
+      display_questions(answer_user_guess, guess, correct_answer)
+      puts "Well done. It took you #{count} guesses" if guess == correct_answer
+      count += 1
+      break if guess == correct_answer
+    end
+  end
+
+  def display_questions(answer_user_guess, guess, correct_answer)
+    if answer_user_guess > 4
+      puts 'Only numbers from 1 to 4'
+    elsif guess != correct_answer
+      puts 'Try again'
     end
   end
 
   def game_material
     material = game_data_parser.new(connector.new.call).call
-    parsed_material = round_data.new(material).call
-    parsed_material
+    game_information.new(material).call
   end
 
   def request_user_answer
