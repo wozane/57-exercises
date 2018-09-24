@@ -3,11 +3,22 @@ GEM
   specs:
     httparty (0.16.2)
       multi_xml (>= 0.5.2)
+    json (2.0.4)
     minitest (5.10.3)
     multi_xml (0.6.0)
+    mustermann (1.0.3)
+    rack (2.0.5)
+    rack-protection (2.0.3)
+      rack
     rake (12.3.1)
+    sinatra (2.0.3)
+      mustermann (~> 1.0)
+      rack (~> 2.0)
+      rack-protection (= 2.0.3)
+      tilt (~> 2.0)
     terminal-table (1.8.0)
       unicode-display_width (~> 1.1, >= 1.1.1)
+    tilt (2.0.8)
     unicode-display_width (1.4.0)
 
 PLATFORMS
@@ -15,8 +26,10 @@ PLATFORMS
 
 DEPENDENCIES
   httparty
+  json
   minitest
   rake (~> 12.3.1)
+  sinatra
   terminal-table
 
 BUNDLED WITH
