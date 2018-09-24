@@ -1,6 +1,6 @@
 require 'minitest/autorun'
 require 'minitest/pride'
-require_relative 'space_v3'
+require_relative 'space'
 require 'ostruct'
 
 class DummyRequest
