@@ -29,6 +29,7 @@ class ChangeStringToArray
   end
 
   private
+
   attr_reader :string
 end
 
@@ -43,6 +44,7 @@ class ExtractKeysAndValues
   end
 
   private
+
   attr_reader :unsorted_array
 end
 
@@ -58,11 +60,15 @@ class PrintData < ExtractKeysAndValues
   end
 
   private
+
   attr_reader :sorted_array
 end
 
 class MainProgram
-  def initialize(file = FileReader, changer = ChangeStringToArray, extractor = ExtractKeysAndValues, presenter = PrintData)
+  def initialize(file = FileReader,
+                 changer = ChangeStringToArray,
+                 extractor = ExtractKeysAndValues,
+                 presenter = PrintData)
     @file = file
     @changer = changer
     @extractor = extractor
@@ -85,7 +91,3 @@ end
 if __FILE__ == $0
   puts MainProgram.new.call
 end
-
-# foo = FileReader.new.call
-
-# p foo.split(' ').group_by(&:itself).transform_values(&:count)
